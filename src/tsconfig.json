@@ -18,8 +18,11 @@
     "Deck.ts",
     "Pile.ts",
     "Player.ts",
-    "./Roll.ts",
-    "Cards/WheatField.ts",
-    "Cards/Effects.ts"
+    "Roll.ts",
+    "Cards/Effects.ts",
+    "Cards/Forest.ts",
+    "Cards/Mine.ts",
+    "Cards/Ranch.ts",
+    "Cards/WheatField.ts"
   ]
 }

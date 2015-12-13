@@ -11,13 +11,14 @@ export abstract class Card extends core.KMObject {
 	description: string;
 	priority: number;
 	abstract shouldActivate(player: player.Player, roll: Roll): boolean;
-	abstract activate(player: player.Player, oponents: player.Player[]): Effect[];
+	abstract activate(player: player.Player, oponents: player.Player[]): core.KMArray<Effect>;
 }
 
 export abstract class Effect {
 	affectedPlayer1: player.Player;
 	affectedPlayer2: player.Player;
 	description: string;
+	constructor(public cardName: string) {}
 	abstract apply(): void;
 }
 

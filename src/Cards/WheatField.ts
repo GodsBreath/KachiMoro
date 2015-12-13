@@ -16,12 +16,9 @@ export class WheatField extends card.PrimaryIndustry {
   };
   activate(player: player.Player, opponents: player.Player[]): core.KMArray<card.Effect> {
     return new core.KMArray<card.Effect>(
-      new effects.GainCoinsEffect(player, 1)
+      new effects.GainCoinsEffect(this.name, player, 1)
     );
   };
-  composeDescription(player: player.Player, coins: number) {
-    return player.displayName + " gained " + coins + " coins!";
-  }
 }
 
 export class StarterWheatField extends WheatField {
