@@ -4,8 +4,8 @@ import card = require('./Card');
 class Pile extends card.CardCollection {
   name: string;
   constructor(name: string);
-  constructor(cards: core.KMArray<card.Card>);
-  constructor(name: string, cards: core.KMArray<card.Card>);
+  constructor(cards: card.CardCollection);
+  constructor(name: string, cards: card.CardCollection);
   constructor(name?: any, cards?: any) {
     super();
 
@@ -20,7 +20,7 @@ class Pile extends card.CardCollection {
       this.cards = cards;
     }
   }
-  discard(cards: core.KMArray<card.Card>) {
+  discard(cards: card.CardCollection) {
     this.cards = <core.KMArray<card.Card>> this.cards.concat(cards);
   };
 }

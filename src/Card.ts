@@ -1,18 +1,30 @@
 import core = require('./Core');
+import player = require('./Player');
+import Roll = require('./Roll');
+import Bank = require('./Bank');
 
 export abstract class Card extends core.Object {
 	name: string;
 	image: string;
 	iconImage: string;
 	cost: number;
-	activation: number[];
-	constructor(public priority: number) {
-		super();
-	}
+	description: string;
+	priority: number;
+	abstract shouldActivate(player: player.Player, roll: Roll): boolean;
+	abstract activate(player: player.Player, oponents: player.Player[]): Effect[];
+}
+
+export abstract class Effect {
+	constructor(public affectedPlayer1: player.Player, public affectedPlayer2: player.Player);
+	abstract apply(): void;
 }
 
 export interface Shuffler {
 	(cards: core.KMArray<Card>): void;
+}
+
+export interface IHasCards {
+	cards: CardCollection;
 }
 
 export class CardCollection extends core.Object {
@@ -32,6 +44,9 @@ export class CardCollection extends core.Object {
 	};
 	get shuffleFunction(): Shuffler {
 		return this.shuffleFunc = this.shuffleFunc || this.getDefaultShuffleFunction();
+	};
+	get length(): number {
+		return this.cards.length;
 	};
 	draw(count: number) : CardCollection {
     var drawn = new CardCollection;
@@ -57,52 +72,76 @@ export class CardCollection extends core.Object {
 			}
 		}
 	};
-	add(card: Card): void {
-		this.cards.push(card);
+	add(card: Card): void;
+	add(cards: CardCollection): void;
+	add(cards: any): void {
+		if (cards.length) {
+			this.cards.concat(cards.cards)
+		} else {
+			this.cards.push(cards);
+		}
+	}
+	remove(card: card.Card): card.Card {
+		var index = this.cards.findIndex((element: card.Card)=>{ return element === card });
+
+		return this.cards.remove(index);
 	};
-	remove(cls: Function, count?: number): CardCollection {
+	remove<U>(cls: {new(): U}, count?: number): CardCollection {
       var removed = new CardCollection();
 			var index: number;
+
 			count = count || Number.MAX_SAFE_INTEGER;
 
-			function cardPredicate(card: Card) : boolean {
-				return card instanceof cls;
-			}
+			for (count; count > 0; count--)	{
+				index = this.cards.findIndex(cardTypePredicate);
 
-      while ((index = this.cards.findIndex(cardPredicate)) > -1 && count-- > 0) {
-				removed.add(this.cards.remove(index));
+				if (index > -1)	{
+					removed.add(this.cards.remove(index));
+				}
+				else {
+					break;
+				}
 			}
 
 			return removed;
+
+			function cardTypePredicate(card: Card): boolean {
+				return card instanceof cls;
+			}
 	};
 }
 
-export class PrimaryIndustry extends Card {
+export abstract class PrimaryIndustry extends Card {
 	constructor() {
-		super(2);
+		super();
+		this.priority = 2;
 	}
 }
 
-export class SecondaryIndustry extends Card {
+export abstract class SecondaryIndustry extends Card {
 	constructor() {
-		super(2);
+		super();
+		this.priority = 2;
 	}
 }
 
-export class Restaurant extends Card {
+export abstract class Restaurant extends Card {
 	constructor() {
-		super(1);
+		super();
+		this.priority = 1;
 	}
 }
 
-export class MajorEstablishment extends Card {
+export abstract class MajorEstablishment extends Card {
 	constructor() {
-		super(3);
+		super();
+		this.priority = 3;
 	}
 }
 
-export class Landmark extends Card {
+export abstract class Landmark extends Card {
 	constructor() {
-		super(0);
+		super();
+		this.priority = 0;
 	}
 }

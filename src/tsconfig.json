@@ -12,9 +12,14 @@
     "node_modules"
   ],
   "files": [
+    "Bank.ts",
     "Card.ts",
     "Core.ts",
     "Deck.ts",
-    "Pile.ts"
+    "Pile.ts",
+    "Player.ts",
+    "./Roll.ts",
+    "Cards/StarterWheatField.ts",
+    "Cards/LoseCoinsEffect.ts"
   ]
 }
