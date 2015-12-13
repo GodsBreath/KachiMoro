@@ -19,7 +19,7 @@
     "Pile.ts",
     "Player.ts",
     "./Roll.ts",
-    "Cards/StarterWheatField.ts",
-    "Cards/LoseCoinsEffect.ts"
+    "Cards/WheatField.ts",
+    "Cards/Effects.ts"
   ]
 }

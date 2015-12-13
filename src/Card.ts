@@ -3,7 +3,7 @@ import player = require('./Player');
 import Roll = require('./Roll');
 import Bank = require('./Bank');
 
-export abstract class Card extends core.Object {
+export abstract class Card extends core.KMObject {
 	name: string;
 	image: string;
 	iconImage: string;
@@ -15,7 +15,9 @@ export abstract class Card extends core.Object {
 }
 
 export abstract class Effect {
-	constructor(public affectedPlayer1: player.Player, public affectedPlayer2: player.Player);
+	affectedPlayer1: player.Player;
+	affectedPlayer2: player.Player;
+	description: string;
 	abstract apply(): void;
 }
 
@@ -27,7 +29,7 @@ export interface IHasCards {
 	cards: CardCollection;
 }
 
-export class CardCollection extends core.Object {
+export class CardCollection extends core.KMObject {
 	protected cards: core.KMArray<Card>;
 	protected shuffleFunc: Shuffler;
 	constructor();
@@ -81,12 +83,12 @@ export class CardCollection extends core.Object {
 			this.cards.push(cards);
 		}
 	}
-	remove(card: card.Card): card.Card {
-		var index = this.cards.findIndex((element: card.Card)=>{ return element === card });
+	remove(card: Card): Card {
+		var index = this.cards.findIndex((element: Card)=>{ return element === card });
 
 		return this.cards.remove(index);
 	};
-	remove<U>(cls: {new(): U}, count?: number): CardCollection {
+	removeCards<U>(cls: {new(): U}, count?: number): CardCollection {
       var removed = new CardCollection();
 			var index: number;
 
@@ -109,6 +111,7 @@ export class CardCollection extends core.Object {
 				return card instanceof cls;
 			}
 	};
+
 }
 
 export abstract class PrimaryIndustry extends Card {

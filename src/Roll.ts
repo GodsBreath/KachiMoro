@@ -1,7 +1,7 @@
 import core = require('./Core');
 import player = require('./Player');
 
-class Roll extends core.Object {
+class Roll extends core.KMObject {
   doubles: boolean;
   total: number;
   constructor(public player: player.Player, public dice: number[]) {

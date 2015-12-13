@@ -1,7 +1,9 @@
 import core = require('./Core');
 import card = require('./Card');
 
-export class Player extends core.Object implements card.IHasCards {
+export class Player extends core.KMObject implements card.IHasCards {
+  displayName: string;
+  name: string;
   coins: number = 0;
   cards: card.CardCollection = new card.CardCollection();
   gainCoins(count: number) {

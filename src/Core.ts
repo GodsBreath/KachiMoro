@@ -1,15 +1,16 @@
-export class Object {
+export class KMObject {
   id: any;
 }
 
 export class KMArray<T> extends Array {
   constructor();
   constructor(array: Array<T>);
-  constructor(array?: any) {
+  constructor(...elements: any[]);
+  constructor(arg?: any) {
     super();
 
-    if (array) {
-      var args = [0, 0].concat(array);
+    if (Array.isArray(arg)) {
+      var args = [0, 0].concat(arg);
       this.splice.apply(this, args);
     }
   }
