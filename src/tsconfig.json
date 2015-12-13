@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "removeComments": true,
+    "target": "es6",
+    "noImplicitAny": false,
+    "outDir": "../lib/",
+    "rootDir": ".",
+    "sourceMap": true
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "files": [
+    "Card.ts",
+    "Core.ts",
+    "Deck.ts",
+    "Pile.ts"
+  ]
+}
